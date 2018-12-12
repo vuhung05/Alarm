@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+    android:fillViewport="true">
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    >
+    <LinearLayout
+        android:id="@+id/tv_quick_time_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="5 min"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/tv_quick_time_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="10 min"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/tv_quick_time_15"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="15 min"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/tv_quick_time_20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="20 min"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/tv_quick_time_25"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="25 min"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/tv_quick_time_45"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="45 min"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/tv_quick_time_95"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="95 min"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>
+</ScrollView>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.vuhung.video10minutes">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".RoutesActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".RecordVideoActivity" />
+
+        <service
+            android:name=".Service.AlarmService"
+            android:enabled="true" />
+
+        <activity android:name=".NotificationActivity" />
+        <activity android:name=".SettingActivity" />
+        <activity android:name=".AlarmSelectionActivity" />
+        <activity
+            android:name=".NewRouteActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name=".TimeRemain" />
+        <activity android:name=".ChildActivity" />
+        <activity android:name=".PassengerManagerActivity"></activity>
+    </application>
+
+</manifest>

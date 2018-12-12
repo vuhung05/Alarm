@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp"
+    android:background="@drawable/circle_item"
+    android:orientation="horizontal">
+    <LinearLayout
+        android:layout_weight="7"
+        android:layout_width="0dp"
+        android:gravity="center|top"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/img_route_status"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/status_orange" />
+    </LinearLayout>
+    <LinearLayout
+        android:gravity="center"
+        android:weightSum="100"
+        android:layout_weight="50"
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:id="@+id/tv_route_name_item"
+            android:layout_weight="50"
+            android:text="Route name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:maxLines="1"
+            android:id="@+id/tv_list_chidren_name"
+            android:text="list children name"
+            android:layout_weight="50"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:weightSum="40"
+        android:gravity="center"
+        android:layout_weight="30"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:gravity="center"
+            android:layout_weight="10"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:background="@android:color/transparent"
+                android:id="@+id/img_clock"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                app:srcCompat="@drawable/clock" />
+        </LinearLayout>
+        <LinearLayout
+            android:gravity="center"
+            android:layout_weight="30"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <TextView
+                android:gravity="center"
+                android:textSize="16sp"
+                android:id="@+id/tv_time_item"
+                android:text="Time"
+                android:layout_marginRight="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>
