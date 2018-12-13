@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -47,6 +48,8 @@ import static com.example.vuhung.video10minutes.TimeRemain.time;
 
 
 public class NotificationActivity extends AppCompatActivity implements IClickListenerAvatarChildAdapter {
+    public  static boolean isTimeUp = false;
+
     SlideToActView slideToActView;
     VideoView videoView;
     FrameLayout layoutNotification;
@@ -63,6 +66,7 @@ public class NotificationActivity extends AppCompatActivity implements IClickLis
     RecyclerView rvChildrenAvatar;
     TextView tvRouteName;
     AvatarChildAdapter avatarChildAdapter;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,8 +107,6 @@ public class NotificationActivity extends AppCompatActivity implements IClickLis
         layoutNotification = (FrameLayout) findViewById(R.id.layout_notification);
         btnAdd5Minutes = findViewById(R.id.btn_add_5minutes);
         imgbtnSmile = findViewById(R.id.imgbtn_smile);
-        alarmService.showNotificationFinish();
-
         route = dbRoutes.getRouteById(iDRunRoute);
         rvChildrenAvatar = findViewById(R.id.rv_children_avatar2);
         tvRouteName = findViewById(R.id.tv_route_name_notification);
@@ -112,6 +114,12 @@ public class NotificationActivity extends AppCompatActivity implements IClickLis
         avatarChildAdapter = new AvatarChildAdapter(route.getListChildren(), this, this);
         rvChildrenAvatar.setAdapter(avatarChildAdapter);
         rvChildrenAvatar.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+
+        alarmService.stopAlarm();
+        isStartAlarm = false;
+        alarmService.showNotificationFinish(route.getName());
+        isTimeUp = true;
 
         Animation animation = new AlphaAnimation(1, 0);
         animation.setDuration(1000);
@@ -138,8 +146,8 @@ public class NotificationActivity extends AppCompatActivity implements IClickLis
 //        }
         Intent i = this.getIntent();
         boolean play = (i.getBooleanExtra("a", false));//da phat hay chua
-
-        SharedPreferences sharedPreferences = getSharedPreferences("MY_ALARM", Context.MODE_PRIVATE);
+        Log.d("ring","isplay"+play);
+        sharedPreferences = getSharedPreferences("MY_ALARM", Context.MODE_PRIVATE);
         if (sharedPreferences.getBoolean("vibrate", false)) {
             vibrates();
         }
@@ -165,7 +173,7 @@ public class NotificationActivity extends AppCompatActivity implements IClickLis
                 imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 imageView.setImageResource(R.drawable.backgroudw);
                 layoutNotification.addView(imageView);
-                if (!play){
+                if (!play) {
                     alarmService.playAlarm(path);
                 }
             }
@@ -178,15 +186,17 @@ public class NotificationActivity extends AppCompatActivity implements IClickLis
             imageView.setImageResource(R.drawable.backgroudw);
             layoutNotification.addView(imageView);
             if (!play) {
+
                 alarmService.playAlarmDefault();
             }
         }
+
+
         slideToActView.setOnSlideCompleteListener(new SlideToActView.OnSlideCompleteListener() {
             @Override
             public void onSlideComplete(@NotNull SlideToActView slideToActView) {
                 iDRunRoute = -1;
-                isStartAlarm = false;
-                alarmService.stopAlarm();
+                isTimeUp = false;
                 alarmService.stopRing();
                 alarmService.hideNotificationFinish();
                 handler.removeCallbacks(runnable);
@@ -197,14 +207,17 @@ public class NotificationActivity extends AppCompatActivity implements IClickLis
         btnAdd5Minutes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isTimeUp = false;
+                iDRunRoute = route.getId();
                 time = time + 5 * 60 * 1000;
-                alarmService.stopAlarm();
                 alarmService.stopRing();
                 alarmService.setTimeBefore(time);
                 alarmService.setTime(5 * 60 * 1000);
-                dbRoutes.update(route.getId(),new Route(route.getName(),route.getListChildren(),route.getIcon(),5*60*1000,time));
-                route= dbRoutes.getRouteById(route.getId());
-                alarmService.startAlarm(dbRoutes.getRouteById(iDRunRoute).getName());
+                handler.removeCallbacks(runnable);
+                dbRoutes.update(route.getId(), new Route(route.getName(), route.getListChildren(), route.getIcon(), 5 * 60 * 1000, time));
+                route = dbRoutes.getRouteById(route.getId());
+                alarmService.startAlarm(route.getName());
+                isStartAlarm = true;
                 alarmService.hideNotificationFinish();
                 Intent i = new Intent(NotificationActivity.this, TimeRemain.class);
                 i.putExtra("start", true);
@@ -237,7 +250,14 @@ public class NotificationActivity extends AppCompatActivity implements IClickLis
     protected void onPause() {
         super.onPause();
     }
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            //preventing default implementation previous to android.os.Build.VERSION_CODES.ECLAIR
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
     //full screen
     @SuppressLint("NewApi")
     @Override
@@ -264,6 +284,24 @@ public class NotificationActivity extends AppCompatActivity implements IClickLis
     @Override
     protected void onResume() {
         super.onResume();
+
+        if (!sharedPreferences.getString("path_alarm", "").equals("")) {
+            path = sharedPreferences.getString("path_alarm", "");
+            if (isAlarmVideo) {
+                videoView = new VideoView(this);
+                layoutNotification.addView(videoView);
+                videoView.setVideoPath(path);
+                videoView.start();
+                Log.d("abcd ", "play video " + path);
+                videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mp.setLooping(true);
+                    }
+                });
+            }
+        }
+
         route = dbRoutes.getRouteById(route.getId());
         DBChild dbChild = new DBChild(this);
         tvRouteName.setText(route.getName());

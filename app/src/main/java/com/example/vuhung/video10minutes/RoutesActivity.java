@@ -36,6 +36,7 @@ import com.example.vuhung.video10minutes.Service.AlarmService;
 import java.util.ArrayList;
 
 import static com.example.vuhung.video10minutes.NewRouteActivity.iDRunRoute;
+import static com.example.vuhung.video10minutes.NotificationActivity.isTimeUp;
 import static com.example.vuhung.video10minutes.SettingActivity.REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_RESULT;
 
 public class RoutesActivity extends AppCompatActivity implements IClickListenerRouteAdapter {
@@ -107,6 +108,12 @@ public class RoutesActivity extends AppCompatActivity implements IClickListenerR
             }
         }
 
+        if (isTimeUp){
+            Intent intent = new Intent(this,NotificationActivity.class);
+            intent.putExtra("a",true);
+            startActivity(intent);
+            finish();
+        }
         imgbtnAddRoutes = findViewById(R.id.imgbtn_add_routes)   ;
         rvRoute = findViewById(R.id.rv_routes);
         dbRoutes= new DBRoutes(this);

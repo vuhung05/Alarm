@@ -31,11 +31,12 @@ public class AlarmService extends Service {
     public static long timeCurrent;
     String name;
     int idRoute;
-    NotificationManager mNotificationManager;
-    NotificationCompat.Builder mBuilder;
+    NotificationManager mNotificationManager,mNotificationManager2;
+    NotificationCompat.Builder mBuilder,mBuilder2 ;
     DBRoutes dbRoutes;
 
-    MediaPlayer mp;
+    private static MediaPlayer mp;
+    boolean isPlay = false;
 
     public static long getTimeCurrent() {
         return timeCurrent;
@@ -95,7 +96,7 @@ public class AlarmService extends Service {
     public void stopAlarm() {
         timer.cancel();
         if (mNotificationManager != null) {
-            mNotificationManager.cancelAll();
+            mNotificationManager.cancel(1);
         }
     }
 
@@ -136,7 +137,7 @@ public class AlarmService extends Service {
             long s = millis % 60000 / 1000;
             String hms = String.format("%02d:%02d:%02d", h, m, s);
             mBuilder = new NotificationCompat.Builder(getApplicationContext())
-                    .setSmallIcon(R.drawable.icon_add_child)
+                    .setSmallIcon(R.drawable.clock1)
                     .setContentTitle("Active route: "+name)
                     .setContentText("Time remaining: "+hms)
                     .setAutoCancel(false)
@@ -173,49 +174,46 @@ public class AlarmService extends Service {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
-        NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(1);
     }
     @Override
     public void onTaskRemoved(Intent rootIntent) {
-        super.onTaskRemoved(rootIntent);
-        NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(1);
+
     }
     public synchronized void playAlarm(String path){
-        mp = new MediaPlayer();
-        try {
-            mp.setDataSource(path);
-            mp.prepare();
-            mp.start();
-            mp.setLooping(true);
-            Log.d("abcd ", "play ringtone " + path);
-            Toast.makeText(this, "ringtone is playing", Toast.LENGTH_SHORT);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (mp==null) {
+            try {
+                mp.setDataSource(path);
+                mp.prepare();
+                mp.start();
+                mp.setLooping(true);
+                Log.d("abcd ", "play ringtone " + path);
+                Toast.makeText(this, "ringtone is playing", Toast.LENGTH_SHORT);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            isPlay = true;
         }
     }
     public void playVideoAlarm(String path){
 
     }
     public void playAlarmDefault(){
-        mp = MediaPlayer.create(this, R.raw.sound);
-        mp.start();
-        mp.setLooping(true);
-
+        if (mp==null) {
+            mp = MediaPlayer.create(this, R.raw.sound);
+            mp.start();
+            mp.setLooping(true);
+            isPlay = true;
+        }
     }
     public void stopRing(){
-        if (mp !=null)
-        {
+            isPlay = false;
             mp.stop();
-        }
+            mp.reset();
+            mp.release();
+            mp = null;
     }
-    public void showNotificationFinish(){
-        if (mNotificationManager!=null){
-            mNotificationManager.cancel(1);
-        }
-        mBuilder = new NotificationCompat.Builder(getApplicationContext())
+    public void showNotificationFinish(String nameRoute){
+        mBuilder2 = new NotificationCompat.Builder(getApplicationContext())
                 .setSmallIcon(R.drawable.icon_add_child)
                 .setContentTitle("Active route: "+name)
                 .setContentText("Time is up!")
@@ -231,14 +229,14 @@ public class AlarmService extends Service {
                         0,
                         PendingIntent.FLAG_UPDATE_CURRENT
                 );
-        mBuilder.setContentIntent(resultPendingIntent);
-        mNotificationManager =
+        mBuilder2.setContentIntent(resultPendingIntent);
+        mNotificationManager2 =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(1, mBuilder.build());
+        mNotificationManager2.notify(2, mBuilder2.build());
     }
     public void hideNotificationFinish(){
-        if (mNotificationManager!=null){
-            mNotificationManager.cancel(1);
+        if (mNotificationManager2!=null){
+            mNotificationManager2.cancel(2);
         }
     }
 }
