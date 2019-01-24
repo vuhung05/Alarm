@@ -43,6 +43,18 @@ public class PassengerManagerActivity extends AppCompatActivity implements IClic
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        allChildren = dbChild.getAllChild();
+        childManageAdapter = new ChildManageAdapter(allChildren,this,this);
+        if (childManageAdapter!=null) {
+            rvChildrenManager.setVisibility(View.VISIBLE);
+            rvChildrenManager.setAdapter(childManageAdapter);
+            rvChildrenManager.setLayoutManager(new LinearLayoutManager(this));
+        }
+    }
+
+    @Override
     public void deleteChild(final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Do you want to delete this child?");

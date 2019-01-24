@@ -126,8 +126,10 @@ public class NewRouteActivity extends AppCompatActivity implements IClickListene
                             time = (long) fragmentQuickTime.getQuickTime();
                             timeCurrent = time;
                         } else {
-                            time = routeUpdate.getTime();
-                            timeCurrent = routeUpdate.getTimeCurrent();
+                            if (routeUpdate!=null) {
+                                time = routeUpdate.getTime();
+                                timeCurrent = routeUpdate.getTimeCurrent();
+                            }
                         }
                     } else if (chooseTime == 2) {
                         FragmentManualTime fragmentManualTime = new FragmentManualTime();

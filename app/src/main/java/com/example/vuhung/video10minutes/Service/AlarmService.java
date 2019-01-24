@@ -92,10 +92,15 @@ public class AlarmService extends Service {
         dbRoutes = new DBRoutes(this);
         idRoute = dbRoutes.getRouteByName(name).getId();
         Log.d("zxcv","id run route " +idRoute);
+        mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                .setSmallIcon(R.drawable.clock1)
+                .setContentTitle("Active route: "+name)
+                .setAutoCancel(false)
+                .setOngoing(true);
     }
     public void stopAlarm() {
         timer.cancel();
-        if (mNotificationManager != null) {
+        if (mNotificationManager!= null) {
             mNotificationManager.cancel(1);
         }
     }
@@ -136,12 +141,7 @@ public class AlarmService extends Service {
             long m = millis % 3600000 / 60000;
             long s = millis % 60000 / 1000;
             String hms = String.format("%02d:%02d:%02d", h, m, s);
-            mBuilder = new NotificationCompat.Builder(getApplicationContext())
-                    .setSmallIcon(R.drawable.clock1)
-                    .setContentTitle("Active route: "+name)
-                    .setContentText("Time remaining: "+hms)
-                    .setAutoCancel(false)
-                    .setOngoing(true);
+            mBuilder.setContentText("Time remaining: "+hms);
             Intent resultIntent = new Intent(getApplicationContext(), TimeRemain.class);
             resultIntent.putExtra("route_id", idRoute);
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(getApplicationContext());
@@ -206,11 +206,13 @@ public class AlarmService extends Service {
         }
     }
     public void stopRing(){
+        if (mp!=null) {
             isPlay = false;
             mp.stop();
             mp.reset();
             mp.release();
             mp = null;
+        }
     }
     public void showNotificationFinish(String nameRoute){
         mBuilder2 = new NotificationCompat.Builder(getApplicationContext())
