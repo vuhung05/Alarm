@@ -1,4 +1,4 @@
-package com.example.vuhung.video10minutes;
+    package com.example.vuhung.video10minutes;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -31,8 +31,7 @@ public class AlarmSelectionActivity extends AppCompatActivity implements IClickL
     AlarmAdapter alarmAdapter;
     SharedPreferences sharedPref ;
     MediaPlayer mp;
-    boolean isPlay = false;
-
+    boolean isPlay = false; //dsdadas
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

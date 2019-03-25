@@ -578,8 +578,6 @@ public class RecordVideoActivity extends AppCompatActivity {
         SurfaceTexture surfaceTexture = mTextureView.getSurfaceTexture();
         surfaceTexture.setDefaultBufferSize(mPreviewSize.getWidth(), mPreviewSize.getHeight());
         Surface previewSurface = new Surface(surfaceTexture);
-        Log.d("KQ", "preview size: " + mPreviewSize.getWidth() + "   " + mPreviewSize.getHeight());
-        Log.d("KQ", "textureView size: " + mTextureView.getWidth() + "   " + mTextureView.getHeight());
         try {
             mCaptureRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
             mCaptureRequestBuilder.addTarget(previewSurface);
