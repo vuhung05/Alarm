@@ -16,8 +16,8 @@ import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 
 public class DBRoutes extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME ="children_list1";
-    private static final String TABLE_NAME ="routes3";
+    public static final String DATABASE_NAME ="alarm";
+    private static final String TABLE_NAME ="routes";
     private static final String ID ="id";
     private static final String NAME ="name";
     private static final String CHILDREN ="children";

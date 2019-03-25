@@ -13,8 +13,8 @@ import com.example.vuhung.video10minutes.Model.Child;
 import java.util.ArrayList;
 
 public class DBChild extends SQLiteOpenHelper  {
-    public static final String DATABASE_NAME ="children_list";
-    private static final String TABLE_NAME ="child2";
+    public static final String DATABASE_NAME ="alarm1";
+    private static final String TABLE_NAME ="child1";
     private static final String ID ="id";
     private static final String NAME ="name";
     private static final String PHOTO ="photo";
